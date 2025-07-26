@@ -5,14 +5,7 @@
 1. The model recieves the model input(text or image). If it is the image, the further preprocessing is done: retrieving food from the fridge photo and passing it further.
 2. We implemented ReAct agent, which includes reasoning(deciding which tool to call) and acting based on the chosen tool. 
 3. Based on user goal, the model decided which tool to call from existing: generate a recipe, search nutricious for the given recipe, provide cooking instructions.
-4. Agent returns information from the tools it decided to use
-
-Describe step-by-step how your agent processes an input:
-1. Receive user input  
-2. (Optional) Retrieve relevant memory  
-3. Plan sub-tasks (e.g., using ReAct / BabyAGI pattern)  
-4. Call tools or APIs as needed  
-5. Summarize and return final output  
+4. Agent returns information from the tools it decided to use.
 
 ## 2. Key Modules
 
