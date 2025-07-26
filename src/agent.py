@@ -10,8 +10,8 @@ from typing import List
 import json
 import os
 
-load_dotenv("/home/dornierdo17/Desktop/Programming/Azorian/src/tools/config/.env")
-api_token_gemini = os.getenv("gemini_api")
+load_dotenv()
+api_token_gemini = os.getenv("GEMINI_API")
 os.environ["GOOGLE_API_KEY"] = api_token_gemini
 
 
@@ -33,7 +33,7 @@ class CustomAgentExecutor:
         self.chat_history = []
         self.max_iters = max_iters
         self.name2tool = {tool.name: tool.func for tool in tools}
-        self.logger = get_logger("CustomAgentExecutor")
+        self.logger = get_logger("main")
         self.llm = ChatGoogleGenerativeAI(
             model="gemini-2.5-flash",
             temperature=0,

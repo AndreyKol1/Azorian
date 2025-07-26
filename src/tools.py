@@ -6,8 +6,7 @@ import json
 import requests
 import os
 
-load_dotenv("/home/dornierdo17/Desktop/Programming/Azorian/src/tools/config/.env")
-api_token_serp = os.getenv("serp_api")
+load_dotenv()
 logger = get_logger("main")
 
 @tool
@@ -15,6 +14,7 @@ def suggest_recipe(user_input: str) -> str:
     """Suggest a recipe based on user preferences (e.g., 'high-protein, low-sugar breakfast')."""
     gemini = GeminiService(sys_prompt=f"""You are a recipe expert. Generate a real recipe name based on the user input: {user_input}""")
     return gemini.generateOnText(user_input)
+
 
 @tool 
 def search_nutritional_info(recipe_name: str) -> dict:
