@@ -19,13 +19,17 @@ interface ChatProps {
   onInputFocus: () => void;
 }
 
-export const Chat  = ({ messages, isLoading, showWelcome, onInputFocus }: ChatProps) => {
-  const scrollAreaRef = useRef<HTMLDivElement>(null);
-  const bottomRef = useRef<HTMLDivElement>(null);
+export const Chat = ({ messages, isLoading, showWelcome, onInputFocus }: ChatProps) => {
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
 
   useEffect(() => {
     if (!showWelcome) {
-      bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+      // Small delay to ensure DOM is updated
+      setTimeout(scrollToBottom, 100);
     }
   }, [messages, isLoading, showWelcome]);
 
@@ -38,7 +42,7 @@ export const Chat  = ({ messages, isLoading, showWelcome, onInputFocus }: ChatPr
   }
 
   return (
-    <ScrollArea className="flex-1 px-4" ref={scrollAreaRef}>
+    <ScrollArea className="flex-1 px-4">
       <div className="max-w-4xl mx-auto py-6">
         <div className="space-y-2">
           {messages.map((message) => (
@@ -59,8 +63,8 @@ export const Chat  = ({ messages, isLoading, showWelcome, onInputFocus }: ChatPr
               </div>
             </div>
           )}
+          <div ref={messagesEndRef} />
         </div>
-        <div ref={bottomRef} />
       </div>
     </ScrollArea>
   );

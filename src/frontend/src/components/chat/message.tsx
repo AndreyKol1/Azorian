@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Bot, User } from 'lucide-react';
 import { Card } from "@/components/ui/card";
+import ReactMarkdown from 'react-markdown';
 
 interface Message {
   id: string;
@@ -33,7 +34,7 @@ export const MessageComponent = ({ message, isUser } : MessageProps) => {
           setIsTyping(false);
           clearInterval(typingInterval);
         }
-      }, 20);
+      }, (Math.floor(Math.random() * (10 - 2 + 1)) + 2));
 
       return () => clearInterval(typingInterval);
     } else {
@@ -76,10 +77,49 @@ export const MessageComponent = ({ message, isUser } : MessageProps) => {
         </div>
         <div className="bg-gray-900 border border-gray-700 px-4 py-3 rounded-lg shadow-lg relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-transparent"></div>
-          <p className="text-sm leading-relaxed text-gray-100 relative z-10">
-            {displayedText}
+          <div className="text-sm leading-relaxed text-gray-100 relative z-10">
+            <ReactMarkdown
+              components={{
+                h1: ({ children }) => <h1 className="text-xl font-bold mb-2 text-cyan-400">{children}</h1>,
+                h2: ({ children }) => <h2 className="text-lg font-bold mb-2 text-cyan-400">{children}</h2>,
+                h3: ({ children }) => <h3 className="text-base font-bold mb-1 text-cyan-400">{children}</h3>,
+                p: ({ children }) => <p className="mb-2 last:mb-0">{children}</p>,
+                strong: ({ children }) => <strong className="font-bold text-white">{children}</strong>,
+                em: ({ children }) => <em className="italic text-gray-300">{children}</em>,
+                code: ({ children }) => (
+                  <code className="bg-gray-800 text-cyan-300 px-1 py-0.5 rounded text-xs font-mono">
+                    {children}
+                  </code>
+                ),
+                pre: ({ children }) => (
+                  <pre className="bg-gray-800 p-3 rounded-lg overflow-x-auto my-2 border border-gray-600">
+                    {children}
+                  </pre>
+                ),
+                ul: ({ children }) => <ul className="list-disc list-inside mb-2 space-y-1">{children}</ul>,
+                ol: ({ children }) => <ol className="list-decimal list-inside mb-2 space-y-1">{children}</ol>,
+                li: ({ children }) => <li className="text-gray-100">{children}</li>,
+                blockquote: ({ children }) => (
+                  <blockquote className="border-l-4 border-cyan-500 pl-4 italic text-gray-300 my-2">
+                    {children}
+                  </blockquote>
+                ),
+                a: ({ href, children }) => (
+                  <a 
+                    href={href} 
+                    className="text-cyan-400 hover:text-cyan-300 underline"
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                  >
+                    {children}
+                  </a>
+                ),
+              }}
+            >
+              {displayedText}
+            </ReactMarkdown>
             {isTyping && <span className="inline-block w-2 h-4 bg-cyan-400 ml-1 animate-pulse"></span>}
-          </p>
+          </div>
         </div>
       </div>
     </div>
